@@ -18,7 +18,7 @@ app.use(cors({
 app.use(
   '/auth',
   createProxyMiddleware({
-    target: 'http://auth-service:5001',  
+    target: process.env.AUTH_SERVICE_URL,  
     changeOrigin: true,
     pathRewrite: {
       '^/auth': '',
@@ -29,7 +29,7 @@ app.use(
 app.use(
   '/users',
   createProxyMiddleware({
-    target: 'http://user-service:5002',   
+    target: process.env.USER_SERVICE_URL,   
     changeOrigin: true,
     pathRewrite: {
       '^/users': '',
@@ -40,7 +40,7 @@ app.use(
 app.use(
   '/products',
   createProxyMiddleware({
-    target: 'http://product-service:5003',   
+    target: process.env.PRODUCT_SERVICE_URL,   
     changeOrigin: true,
     pathRewrite: {
       '^/products': '',
@@ -49,6 +49,5 @@ app.use(
 );
 
 app.listen(port, () => {
-    // console.log(`gateway - http://localhost:${port}`);
     console.log(`gateway running on port ${port}`);    
 });
