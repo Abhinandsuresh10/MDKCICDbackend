@@ -11,24 +11,13 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 
-const port = process.env.PORT || 5000
+const port = process.env.PORT 
 
 app.use(cors({
         origin: process.env.CORS_ORIGIN || '*',
         methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH'],
         credentials: true,
 }));
-
-const fixRequestBody = (proxyReq, req) => {
-  if (!req.body || !Object.keys(req.body).length) return;
-
-  const bodyData = JSON.stringify(req.body);
-
-  proxyReq.setHeader('Content-Type', 'application/json');
-  proxyReq.setHeader('Content-Length', Buffer.byteLength(bodyData));
-
-  proxyReq.write(bodyData);
-};
 
 app.use(
   '/auth',
@@ -38,7 +27,6 @@ app.use(
     pathRewrite: {
       '^/auth': '',
     },
-    onProxyReq: fixRequestBody
   })
 );
 
@@ -50,7 +38,6 @@ app.use(
     pathRewrite: {
       '^/users': '',
     },
-    onProxyReq: fixRequestBody
   })
 );
 
@@ -62,7 +49,6 @@ app.use(
     pathRewrite: {
       '^/products': '',
     },
-    onProxyReq: fixRequestBody
   })
 );
 
