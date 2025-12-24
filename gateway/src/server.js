@@ -11,13 +11,14 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 
-const port = process.env.PORT 
+const port = process.env.PORT || 5000
 
 app.use(cors({
         origin: process.env.CORS_ORIGIN || '*',
         methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH'],
         credentials: true,
 }));
+
 
 app.use(
   '/auth',
