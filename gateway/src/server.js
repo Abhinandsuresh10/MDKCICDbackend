@@ -19,6 +19,17 @@ app.use(cors({
         credentials: true,
 }));
 
+const fixRequestBody = (proxyReq, req) => {
+  if (!req.body || !Object.keys(req.body).length) return;
+
+  const bodyData = JSON.stringify(req.body);
+
+  proxyReq.setHeader('Content-Type', 'application/json');
+  proxyReq.setHeader('Content-Length', Buffer.byteLength(bodyData));
+
+  proxyReq.write(bodyData);
+};
+
 app.use(
   '/auth',
   createProxyMiddleware({
@@ -27,6 +38,7 @@ app.use(
     pathRewrite: {
       '^/auth': '',
     },
+    onProxyReq: fixRequestBody
   })
 );
 
@@ -38,6 +50,7 @@ app.use(
     pathRewrite: {
       '^/users': '',
     },
+    onProxyReq: fixRequestBody
   })
 );
 
@@ -49,6 +62,7 @@ app.use(
     pathRewrite: {
       '^/products': '',
     },
+    onProxyReq: fixRequestBody
   })
 );
 
