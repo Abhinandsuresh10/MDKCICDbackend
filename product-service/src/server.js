@@ -14,8 +14,8 @@ app.use(express.urlencoded({ extended: true }))
 
 app.use('/', productRoutes);
 
-const port = process.env.PORT || 5003
+const PORT = process.env.PORT || 5003
 
-app.listen(port, () => {
-    console.log(`product-service - http://localhost:${port}`); 
+app.listen(PORT, () => {
+   console.log(`product-service running on port ${PORT}`);
 })

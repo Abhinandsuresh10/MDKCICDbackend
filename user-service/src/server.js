@@ -11,11 +11,11 @@ connectDB();
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-const port = process.env.PORT || 5002;
+const PORT = process.env.PORT || 5002;
 
 app.use('/', userRoutes);
 
-app.listen(port, () => {
-    console.log(`user-service - http://localhost:${port}`);
+app.listen(PORT, () => {
+    console.log(`user-service running on port ${PORT}`);
 })
 
